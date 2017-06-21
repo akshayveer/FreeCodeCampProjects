@@ -7,8 +7,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.css" media="screen" title="no title">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/font/weathericons-regular-webfont.ttf" media="screen" title="no title">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="main.js" charset="utf-8"></script>
+    <style media="screen">
+      body{
+        margin-top: 40px;
+      }
+      .wi{
+        font-size: 50px;
+      }
+      .btn{
+        display: none;
+      }
+    </style>
   </head>
   <body>
+    <div class="container">
+      <div class="weather-icon text-center">
+        <i class="wi"></i>
+      </div>
+      <div class="text-center">
+        <h2 class="temperature" value="f"></h2>
+        <button class="btn btn-primary" onclick="convertTemperature()"> Convert temperature </button>
+      </div>
+    </div>
   </body>
+  <script src="main.js" charset="utf-8"></script>
 </html>

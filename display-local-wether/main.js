@@ -27,7 +27,7 @@ var weather_icons_name_mapping = {
 }
 
 var temperature = {
-  "c" : 36.6667,
+  "c" : 36,
   "f" : 98
 };
 var weather_icon = "default";
@@ -68,16 +68,17 @@ function get_weather_forecast_sucess(data, status, requestObject) {
       }
     }
     if (data['currently'].hasOwnProperty('temperature')){
-      temp = data['currently']['temperature'];
+      temp = Math.floor(data['currently']['temperature']);
     }
   }
   temperature['c'] = convert_to_celsius(temp);
   temperature['f'] = temp;
   weather_icon = icon;
+  updateDiplay();
 }
 
 function convert_to_celsius(fah){
-  return (fah - 32) * (5 / 9);
+  return Math.floor((fah - 32) * (5 / 9));
 }
 
 function get_weather_forecast_error(requestObject, status, error) {
@@ -112,3 +113,26 @@ if ("geolocation" in navigator) {
 } else {
   alert("Geo loation is not available. Please use this app on different browser which has geolocation");
 }
+
+function updateDiplay() {
+  $('.wi').addClass(weather_icons_name_mapping[weather_icon]);
+  var temp = weather_icon.split('-');
+  temp.pop();
+  $('.wi').text(' ' + temp.join(' '));
+  $('.btn').show();
+  convertTemperature();
+}
+
+function convertTemperature(){
+  var currentUnit = $('.temperature').attr('value');
+
+  if (currentUnit === 'f'){
+    $('.temperature').html("Current temperature is : " + temperature['c'] + " &#176;C");
+    $('.temperature').attr('value','c');
+  } else {
+    $('.temperature').html("Current temperature is : " + temperature['f'] + " &#176;F");
+    $('.temperature').attr('value','f');
+  }
+}
+
+$('.btn').hide();
