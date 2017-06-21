@@ -1,7 +1,10 @@
 // weatehr api cdn https://cdnjs.com/libraries/weather-icons
+// some icon values of weather api already contains day or night
+// term, so to have a unified interface I have day day / night
+// for values like clear-day
 var weather_icons_name_mapping = {
-  "clear-day" : "wi-day-sunny",
-  "clear-night" : "wi-night-clear",
+  "clear-day-day" : "wi-day-sunny",
+  "clear-night-night" : "wi-night-clear",
   "rain-day" : "wi-day-rain",
   "rain-night" : "wi-night-alt-rain-wind",
   "snow-day" : "wi-day-snow",
@@ -23,22 +26,17 @@ var weather_icons_name_mapping = {
   "default" : "wi-day-sunny"
 }
 
+var temperature = {
+  "c" : 36.6667,
+  "f" : 98
+};
+var weather_icon = "default";
+
 function check_weather_icons_functionality(){
   console.log('adding elements');
   for (key in weather_icons_name_mapping){
     $('.container').append('<div style="text-size:40px">'+ key + ' <i class="wi ' + weather_icons_name_mapping[key] + '"</i></div>');
   }
-}
-
-function get_location_suceess(position) {
-  latitude = position.coords.latitude;
-  longitute = position.coords.longitude;
-  console.log(latitude, longitute);
-  get_weather_forecast(latitude, longitute);
-}
-
-function get_location_failure(err) {
-  console.error(err.code, err.message);
 }
 
 function create_api_url(latitude, longitute) {
@@ -52,9 +50,34 @@ function create_api_url(latitude, longitute) {
 }
 
 function get_weather_forecast_sucess(data, status, requestObject) {
-  for (key in data){
-    console.log(key, data[key]);
+  var icon = "default";
+  var temp = "99";
+
+  if (data.hasOwnProperty('currently')){
+    if (data['currently'].hasOwnProperty('icon')){
+      icon = data['currently']['icon'];
+      if (data['currently'].hasOwnProperty('time')){
+        var timeInSeconds = data['currently']['time'];
+        var d = new Date(0);
+        d.setUTCSeconds(timeInSeconds);
+        if (d.getHours() < 18){
+          icon += "-day";
+        } else {
+          icon += '-night';
+        }
+      }
+    }
+    if (data['currently'].hasOwnProperty('temperature')){
+      temp = data['currently']['temperature'];
+    }
   }
+  temperature['c'] = convert_to_celsius(temp);
+  temperature['f'] = temp;
+  weather_icon = icon;
+}
+
+function convert_to_celsius(fah){
+  return (fah - 32) * (5 / 9);
 }
 
 function get_weather_forecast_error(requestObject, status, error) {
@@ -71,9 +94,21 @@ function get_weather_forecast(latitude, longitute) {
   });
 }
 
+function get_location_suceess(position) {
+  latitude = position.coords.latitude;
+  longitute = position.coords.longitude;
+  console.log(latitude, longitute);
+  get_weather_forecast(latitude, longitute);
+}
+
+function get_location_failure(err) {
+  console.error(err.code, err.message);
+}
+
+
 if ("geolocation" in navigator) {
   /* geolocation is available */
-  //navigator.geolocation.getCurrentPosition(get_location_suceess, get_location_failure);
+  navigator.geolocation.getCurrentPosition(get_location_suceess, get_location_failure);
 } else {
   alert("Geo loation is not available. Please use this app on different browser which has geolocation");
 }
