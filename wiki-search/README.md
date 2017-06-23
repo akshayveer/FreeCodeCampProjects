@@ -1,4 +1,4 @@
-# fBuild a Wikipedia Viewer
+# Build a Wikipedia Viewer
 click [here](https://www.freecodecamp.com/challenges/build-a-wikipedia-viewer) to view the challenge
 
 ### User Stories
