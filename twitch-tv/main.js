@@ -14,7 +14,8 @@ var favorite_channels = {
     console.log(channel);
     if (channel_name == ''){
       console.error(channel.error, channel.message);
-      alert(channel.message);
+      //alert(channel.message);
+      showError(channel.message);
       return;
     } else if (this.channels.hasOwnProperty(channel_name) == false){
       this.channels[channel_name] = channel;
@@ -52,6 +53,19 @@ function updateChannelView(channel) {
     view.children('a').prop('hidden', true);
   }
   $('.channel_name').val('');
+}
+
+function showError(message) {
+  var content = '<div class="row"> \
+    <div class="col-lg-3"></div>\
+    <div class="col-lg-6">\
+      <div class="alert alert-warning alert-dismissible" role="alert">\
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+        <strong>Error!</strong> '+ message + '\
+      </div>\
+    </div>\
+  </div>'
+  $('.container').prepend(content);
 }
 
 function createView(channel) {
@@ -92,7 +106,12 @@ function getChannelInfoSuccess(data, status, obj) {
   if (data.hasOwnProperty('error')){
     favorite_channels.addChannelInfo('', {'error' : data['error'], 'message' : data['message']});
   } else {
-    favorite_channels.addChannelInfo(data['name'], new Channel(data['display_name'],data['status'],null,false, null, data['url'], data['logo']));
+    var img_logo = "https://via.placeholder.com/300x300";
+    if (data['logo'] != null){
+      img_logo = data['logo'];
+    }
+    console.log('imge url is ', data['logo']);
+    favorite_channels.addChannelInfo(data['name'], new Channel(data['display_name'],data['status'],null,false, null, data['url'], img_logo));
   }
 
 }
@@ -151,6 +170,7 @@ function getStreamInfo(channel_name) {
 $('.channel_name').keypress(function (e) {
   if (e.which == 13){
     var channel_name = $('.channel_name').val();
+    $('.channel_name').val('');
     favorite_channels.addChannel(channel_name);
   }
 })
