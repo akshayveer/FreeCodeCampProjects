@@ -49,10 +49,10 @@ function updateChannelView(channel) {
     view.children('a').text(channel.status);
     view.children('a').prop('hidden', false);
   } else {
-    view.children('h6').text('ofline');
+    view.children('h6').text('Ofline');
     view.children('a').prop('hidden', true);
   }
-  $('.channel_name').val('');
+
 }
 
 function showError(message) {
