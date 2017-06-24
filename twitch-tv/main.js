@@ -3,6 +3,79 @@ var twitch_urls = {
   'channel_info' :  "https://wind-bow.gomix.me/twitch-api/channels/"
 };
 
+var favorite_channels = {
+  channels : {},
+  addChannel : function (channel_name) {
+    console.log('adding channel name :', channel_name);
+    getChannleInfo(channel_name);
+  },
+  addChannelInfo : function (channel_name, channel) {
+    console.log('Channel info for ', channel_name);
+    console.log(channel);
+    if (channel_name == ''){
+      console.error(channel.error, channel.message);
+      alert(channel.message);
+      return;
+    } else if (this.channels.hasOwnProperty(channel_name) == false){
+      this.channels[channel_name] = channel;
+      this.channels[channel_name].view = createView(channel);
+      console.log('created view');
+      console.log(this.channels[channel_name].view);
+      addView(this.channels[channel_name]);
+    }
+    getStreamInfo(channel_name);
+  },
+  addStreamInfo : function (channel_name, stream_info) {
+      console.log(stream_info);
+      this.channels[channel_name].online = stream_info['online'];
+      updateChannelView(this.channels[channel_name]);
+  }
+}
+
+function addView(channel){
+  $('.results').append(channel.view);
+}
+
+function updateChannelView(channel) {
+  console.log('updating view based on onlie');
+  var view = channel.view.children(1);
+  console.log(view);
+  console.log(view.children(1));
+  console.log(view.children(2));
+  if (channel.online){
+    view.children('h6').text('Online');
+    view.children('a').attr('href',channel.url);
+    view.children('a').text(channel.status);
+    view.children('a').prop('hidden', false);
+  } else {
+    view.children('h6').text('ofline');
+    view.children('a').prop('hidden', true);
+  }
+  $('.channel_name').val('');
+}
+
+function createView(channel) {
+  var container = $('<div class="row" style="margin-top:20px"></div>');
+  var col1 = $('<div class="col-lg-2 col-md-2 col-sm-4"></div>');
+  var col2 = $('<div class="col-lg-4 col-md-4 col-sm-8"></div>');
+  var img = $('<img class="img-responsive imageClip" src="' + channel.logo + '">');
+  var header = $('<h4></h4>');
+  var online_status = $('<h6></h6>');
+  var link = $('<a target="_blank"></a>');
+
+  col1.append(img);
+  header.text(channel.display_name);
+
+  col2.append(header);
+  col2.append(online_status);
+  col2.append(link);
+  container.append('<div class="col-lg-3 col-md-3"></div>')
+  container.append(col1);
+  container.append(col2);
+
+  return container;
+}
+
 function Channel(display_name, status, online, error, message, url, logo){
   this.display_name = display_name,
   this.status = status,
@@ -14,12 +87,14 @@ function Channel(display_name, status, online, error, message, url, logo){
 };
 
 
+
 function getChannelInfoSuccess(data, status, obj) {
   if (data.hasOwnProperty('error')){
-    console.log({'error' : data['error'], 'message' : data['message']});
+    favorite_channels.addChannelInfo('', {'error' : data['error'], 'message' : data['message']});
   } else {
-    console.log(new Channel(data['display_name'],data['status'],false,null, null, data['url'], data['logo']));
+    favorite_channels.addChannelInfo(data['name'], new Channel(data['display_name'],data['status'],null,false, null, data['url'], data['logo']));
   }
+
 }
 
 function getChannelInfoError(obj, error, status){
@@ -48,12 +123,12 @@ function getStreamInfoError(req, error, status) {
   console.error(obj.responseText);
 }
 
-function getStreamInfoSuccess(data, status, obj) {
+function getStreamInfoSuccess(data, channel_name) {
   console.log(data);
   if (data['stream'] == null){
-    console.log({'online' : false});
+    favorite_channels.addStreamInfo(channel_name, {'online' : false});
   } else {
-    console.log({'online' : true});
+    favorite_channels.addStreamInfo(channel_name, {'online' : true});
   }
 }
 
@@ -66,7 +141,20 @@ function getStreamInfo(channel_name) {
     dataType : "jsonp",
     cache: false,
     crossorigin: true,
-    success: getStreamInfoSuccess,
+    success: function (data) {
+      getStreamInfoSuccess(data, channel_name);
+    },
     error: getStreamInfoError
   });
 }
+
+$('.channel_name').keypress(function (e) {
+  if (e.which == 13){
+    var channel_name = $('.channel_name').val();
+    favorite_channels.addChannel(channel_name);
+  }
+})
+
+$(document).ready(function () {
+  favorite_channels.addChannel('freecodecamp');
+})
