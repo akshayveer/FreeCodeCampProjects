@@ -6,3 +6,5 @@ click [here](https://www.freecodecamp.com/challenges/use-the-twitchtv-json-api) 
 2. I can click the status output and be sent directly to the Free Code Camp's Twitch.tv channel.
 3. if a Twitch user is currently streaming, I can see additional details about what they are streaming.
 4. I will see a placeholder notification if a streamer has closed their Twitch account (or the account never existed). You can verify this works by adding brunofin and comster404 to your array of Twitch streamers.
+
+click [here](https://codepen.io/akshayveer/pen/qjXLLj) to view project on codepen
