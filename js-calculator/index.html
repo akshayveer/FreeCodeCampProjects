@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style media="screen">
+
+  .calculator-container{
+    float: none;
+    margin: 50px auto 0 auto;
+    border: 10px groove;
+  }
+  .display{
+    height: 50px;
+  }
+  .cell{
+    margin: 20px 0;
+  }
+  .equal {
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+  }
+  .row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .display{
+    padding: 10px;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="col-xs-12 col-sm-8 col-md-4 calculator-container">
+
+      <div class="row display">
+        <div class="col-12 pull-right">
+          <h4>4</h4>
+          <p class="ext-muted">44</p>
+        </div>
+      </div> <!-- end of display -->
+      <hr>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <button type="button" name="AC" class="btn btn-block cell">AC</button>
+        </div>
+        <div class="col-sm-3">
+          <button type="button" name="CE" class="btn btn-block cell">CE</button>
+        </div>
+        <div class="col-sm-3">
+          <button type="button" name="/" class="btn btn-block cell">/</button>
+        </div>
+        <div class="col-sm-3">
+          <button type="button" name="x" class="btn btn-block cell">&cross;</button>
+        </div>
+      </div> <!-- end of row 1 -->
+
+      <div class="row">
+        <div class="col-sm-3">
+          <button type="button" name="7" class="btn btn-block cell">7</button>
+        </div>
+        <div class="col-sm-3">
+          <button type="button" name="8" class="btn btn-block cell">8</button>
+        </div>
+        <div class="col-sm-3">
+          <button type="button" name="9" class="btn btn-block cell">9</button>
+        </div>
+        <div class="col-sm-3">
+          <button type="button" name="-" class="btn btn-block cell">-</button>
+        </div>
+      </div> <!-- end of row 2 -->
+
+      <div class="row">
+        <div class="col-sm-3">
+          <button type="button" name="4" class="btn btn-block cell">4</button>
+        </div>
+        <div class="col-sm-3">
+          <button type="button" name="5" class="btn btn-block cell">5</button>
+        </div>
+        <div class="col-sm-3">
+          <button type="button" name="6" class="btn btn-block cell">6</button>
+        </div>
+        <div class="col-sm-3">
+          <button type="button" name="+" class="btn btn-block cell">+</button>
+        </div>
+      </div> <!-- end of row 3 -->
+
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="row">
+            <div class="col-sm-4">
+              <button type="button" name="1" class="btn btn-block cell">1</button>
+            </div>
+            <div class="col-sm-4">
+              <button type="button" name="2" class="btn btn-block cell">2</button>
+            </div>
+            <div class="col-sm-4">
+              <button type="button" name="3" class="btn btn-block cell">3</button>
+            </div>
+          </div> <!-- last but first row -->
+          <div class="row">
+            <div class="col-sm-8">
+              <button type="button" name="0" class="btn btn-block cell">0</button>
+            </div>
+            <div class="col-sm-4">
+              <button type="button" name="." class="btn btn-block cell">.</button>
+            </div>
+          </div> <!-- last row -->
+        </div>
+
+        <div class="col-sm-3">
+          <button type="button" name="AC" class="btn btn-block cell" style="padding:43px 0;">=</button>
+        </div>
+      </div> <!-- end of last to rows -->
+
+    </div> <!-- end of calculator container -->
+
+  </div> <!-- end of main container -->
+</body>
+<script src="main.js" charset="utf-8"></script>
+</html>
