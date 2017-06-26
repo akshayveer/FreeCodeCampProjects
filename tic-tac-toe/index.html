@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+    <style media="screen">
+      body{
+        background-color: #F6FF33;
+      }
+      .cell{
+        font-family: 'Gloria Hallelujah', cursive;
+        border: 1px solid red;
+        padding: 10px;
+        cursor: pointer; cursor: hand;
+      }
+      .board {
+        float: none;
+        margin: 100px auto;
+      }
+      .game-play{
+        border-radius: 50%;
+        margin: 10px;
+      }
+      .setting{
+        position: absolute;
+        z-index: 10;
+        padding: 20px;
+        border: 1px solid red;
+        /*text-align: center;*/
+      }
+      .game-icon{
+        font-family: 'Gloria Hallelujah', cursive;
+        cursor: pointer; cursor: hand;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+
+      <div class="col-xs-12 col-sm-3 board">
+        <div class="setting">
+            <h2 class="text-info">Choose Game Play</h2>
+            <button type="button" class="btn game-play btn-warning btn-block"> Single Player</button>
+            <button type="button" class="btn game-play btn-warning btn-block"> Multi Player</button>
+            <h2 class="text-info">Choose <span class="game-icon">X</span> or
+            <span class="game-icon" >O</span></h2>
+            <button type="button" class="btn game-play btn-success btn-block"> Start </button>
+        </div>
+        <div class="game hide text-center">
+          <div class="row">
+            <div class="col-xs-4 cell">
+              <h1 >X</h1>
+            </div> <!-- firt column end -->
+            <div class="col-xs-4 cell">
+              <h1>X</h1>
+            </div> <!-- second column end -->
+            <div class="col-xs-4 cell">
+              <h1>X</h1>
+            </div> <!-- thrid column end -->
+          </div> <!-- first row end -->
+
+          <div class="row">
+            <div class="col-xs-4 cell">
+              <h1>X</h1>
+            </div> <!-- firt column end -->
+            <div class="col-xs-4 cell">
+              <h1>X</h1>
+            </div> <!-- second column end -->
+            <div class="col-xs-4 cell">
+              <h1>X</h1>
+            </div> <!-- thrid column end -->
+          </div> <!-- second row end -->
+
+          <div class="row">
+            <div class="col-xs-4 cell">
+              <h1>X</h1>
+            </div> <!-- firt column end -->
+            <div class="col-xs-4 cell">
+              <h1>X</h1>
+            </div> <!-- second column end -->
+            <div class="col-xs-4 cell">
+              <h1>X</h1>
+            </div> <!-- thrid column end -->
+          </div> <!-- third row end -->
+        </div> <!-- end of game div -->
+      </div> <!-- end of board box -->
+    </div> <!-- end of container -->
+  </body>
+</html>
