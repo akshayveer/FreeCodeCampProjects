@@ -70,9 +70,10 @@ function computerMove() {
 }
 
 function resetBoard() {
-  board_config= {};
+
   for (var id = 1;id <= 9;id++){
     $('#'+id).html('&nbsp;');
+    board_config[id] = '';
   }
 }
 
@@ -158,7 +159,12 @@ function checkGameOver(id) {
 }
 
 function gameTie() {
-  return Object.keys(board_config).length == 9;
+  for (var i = 1;i <= 9;i++){
+    if (board_config[i] == '' || board_config[i] == ' ' || board_config[i] == null){
+      return false;
+    }
+  }
+  return true;
 }
 
 $('.cell').on('click', function (e) {
