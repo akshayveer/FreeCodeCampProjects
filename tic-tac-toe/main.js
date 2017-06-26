@@ -65,8 +65,150 @@ function markCell(cellId, val) {
   $('#'+cellId).text(val);
 }
 
-function computerMove() {
+function getBestAndWorstCase(cp){
+  if (cp == 1){
+    var prob = 1;
+    for (var i = 1;i <= 9;i++){
+      if (board_config[i] == ''){
+        board_config[i] = player_choices[1];
+        if (checkGameOver(i)){
+          board_config[i] = '';
+          return {'chance' : 0};
+        } else if (gameTie()){
+          prob = 0.5;
+        } else {
+          var temp = getBestAndWorstCase(2);
+          if (temp.chance == 0){
+            board_config[i] = '';
+            return {'chance' : 0};
+          } else if(temp.chance == 0.5){
+            prob = 0.5;
+          }
+        }
+        board_config[i] = '';
+      }
+    }
+    return {'chance' : prob};
+  } else {
+    var prob = 0;
+    var poss_index;
+    for (var i = 1;i <= 9;i++){
+      if (board_config[i] == ''){
+        board_config[i] = player_choices[2];
+        if (checkGameOver(i)){
+          board_config[i] = '';
+          return {'id' : i, 'chance' : 1};
+        } else if (gameTie()){
+          prob = 0.5;
+          poss_index = i;
+        } else {
+          var temp  = getBestAndWorstCase(1);
+          //console.log(temp);
+          if (temp.chance === 1){
+            board_config[i] = '';
+            return {'id' : i, 'chance' : 1};
+          } else if (temp.chance == 0.5){
+            prob = 0.5;
+            poss_index = i;
+          }
+        }
+        board_config[i] = '';
+        if (prob == 0){
+          poss_index = i;
+        }
+      }
+    }
+    return {'id' : poss_index, 'chance' : prob};
+  }
+}
+// best case win probability and worst case win probability
+// first value is in best case probability of winning alteast this much
+// second value in in worst case probability of winning is altest this much
+function getBestAndWorstCase1(cp) {
+  //console.log(board_config);
+  //debugger;
+  if (cp == 1){
+    var probabilites = [];
+    for (var i = 1;i <= 9;i++){
+      if (board_config[i] == ''){
+        board_config[i] = player_choices[1];
+        if (checkGameOver(i)){
+          board_config[i] = '';
+          return [{'id' : i, 'chance' : 0},{'id' : i, 'chance' : 0}];
+        } else if (gameTie()){
+          probabilites.push([{'id' : i, 'chance' : 0.5},{'id' : i, 'chance' : 0.5}]);
+        } else {
+          probabilites.push(getBestAndWorstCase(2));
+        }
+        board_config[i] = '';
+      }
+    }
+    //console.log('player 1', probabilites);
+    if (probabilites.length == 1){
+      return [probabilites[0][1], probabilites[0][1]];
+    }
+    probabilites.sort(function (p1, p2) {
+      if (p1[1].chance < p2[1].chance){
+        return -1;
+      } else if(p1[1].chance == p2[1].chance){
+        if (p1[0].chance < p2[0].chance){
+          return -1;
+        } else{
+          return 1;
+        }
+      } else {
+        return 1;
+      }
+    });
+    return [probabilites[1][1], probabilites[0][1]];
+  } else {
+    var probabilites = [];
+    for (var i = 1;i <= 9;i++){
+      if (board_config[i] == ''){
+        board_config[i] = player_choices[2];
+        if (checkGameOver(i)){
+          board_config[i] = '';
+          return [{'id': i, 'chance' : 1},{'id': i, 'chance' : 1}];
+        } else if (gameTie()){
+          probabilites.push([{'id' : i, 'chance' : 0.5},{'id' : i, 'chance' : 0.5}]);
+        } else {
+          probabilites.push(getBestAndWorstCase(1));
+          probabilites[probabilites.length - 1][0].id = i;
+          probabilites[probabilites.length - 1][1].id = i;
+        }
+        board_config[i] = '';
+      }
+    }
+    //console.log('player 2', probabilites);
+    if (probabilites.length == 1){
+      return [probabilites[0][1], probabilites[0][1]];
+    }
+    probabilites.sort(function(p1, p2){
+      //console.log(p1, p2);
 
+      if (p1[1].chance > p2[1].chance){
+        return -1;
+      } else if(p1[1].chance == p2[1].chance){
+        if (p1[0].chance > p2[0].chance){
+          return -1;
+        } else {
+          return 1;
+        }
+      } else {
+        return 1;
+      }
+    });
+
+    return [probabilites[1][1], probabilites[0][1]];
+  }
+}
+
+function computerMove() {
+  var prop = getBestAndWorstCase(2);
+  var next_move_id = prop.id;
+  console.log(prop);
+  console.log('next move', next_move_id);
+  $('#' + next_move_id).trigger('click');
 }
 
 function resetBoard() {
@@ -194,7 +336,7 @@ $('.cell').on('click', function (e) {
       }
   }
   $('#current-player').text(player_name[current_player]);
-  if (single_player){
+  if (single_player && current_player === 2){
     computerMove();
   }
 });
