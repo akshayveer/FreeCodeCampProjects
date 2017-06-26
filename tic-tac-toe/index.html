@@ -45,50 +45,52 @@
       <div class="col-xs-12 col-sm-3 board">
         <div class="setting">
             <h2 class="text-info">Choose Game Play</h2>
-            <button type="button" class="btn game-play btn-warning btn-block"> Single Player</button>
-            <button type="button" class="btn game-play btn-warning btn-block"> Multi Player</button>
-            <h2 class="text-info">Choose <span class="game-icon">X</span> or
-            <span class="game-icon" >O</span></h2>
-            <button type="button" class="btn game-play btn-success btn-block"> Start </button>
+            <button type="button" value="s" onclick="setGamePlay('s')" class="btn game-play btn-warning btn-block"> Single Player</button>
+            <button type="button" value="m" onclick="setGamePlay('m')" class="btn game-play btn-warning btn-block"> Multi Player</button>
+            <h2 class="text-info">Choose <span value='x' onclick="setPlayerOneChoice('x')"class="game-icon">X</span> or
+            <span value='o' class="game-icon" onclick="setPlayerOneChoice('o')" >O</span></h2>
+            <button type="button" onclick="showBoard()" class="btn game-play btn-success btn-block"> Start </button>
         </div>
-        <div class="game hide text-center">
+        <div class="text-center" id="game">
+          <h2 id="current-player">Player 1</h2>
           <div class="row">
             <div class="col-xs-4 cell">
-              <h1 >X</h1>
+              <h1 >&nbsp;</h1>
             </div> <!-- firt column end -->
             <div class="col-xs-4 cell">
-              <h1>X</h1>
+              <h1>&nbsp;</h1>
             </div> <!-- second column end -->
             <div class="col-xs-4 cell">
-              <h1>X</h1>
+              <h1>&nbsp;</h1>
             </div> <!-- thrid column end -->
           </div> <!-- first row end -->
 
           <div class="row">
             <div class="col-xs-4 cell">
-              <h1>X</h1>
+              <h1>&nbsp;</h1>
             </div> <!-- firt column end -->
             <div class="col-xs-4 cell">
-              <h1>X</h1>
+              <h1>&nbsp;</h1>
             </div> <!-- second column end -->
             <div class="col-xs-4 cell">
-              <h1>X</h1>
+              <h1>&nbsp;</h1>
             </div> <!-- thrid column end -->
           </div> <!-- second row end -->
 
           <div class="row">
             <div class="col-xs-4 cell">
-              <h1>X</h1>
+              <h1>&nbsp;</h1>
             </div> <!-- firt column end -->
             <div class="col-xs-4 cell">
-              <h1>X</h1>
+              <h1>&nbsp;</h1>
             </div> <!-- second column end -->
             <div class="col-xs-4 cell">
-              <h1>X</h1>
+              <h1>&nbsp;</h1>
             </div> <!-- thrid column end -->
           </div> <!-- third row end -->
         </div> <!-- end of game div -->
       </div> <!-- end of board box -->
     </div> <!-- end of container -->
   </body>
+  <script src="main.js" charset="utf-8"></script>
 </html>
