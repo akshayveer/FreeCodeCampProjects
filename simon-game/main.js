@@ -18,3 +18,28 @@ function createSVGPath(cx, cy, r1, r2, width) {
 $(document).ready(function () {
   createSVGPath(0, 100, 100, 30, 5);
 })
+
+
+$("svg").mouseup(function(evt){
+  var target = evt.target;
+  var id = target.id;
+  if (id !== ''){
+    if (id.startsWith("svg")){
+      $(target).removeClass(id+'-hover');
+      $('#audio-'+id).prop("loop",false);
+    }
+  }
+  return false;
+}).mousedown(function(evt){
+  var target = evt.target;
+  var id = target.id;
+  if (id !== ''){
+    if (id.startsWith("svg")){
+      $('#audio-'+id).prop("loop",true);
+      $(target).addClass(id+'-hover');
+      $('#audio-'+id).get(0).play();
+    }
+
+  }
+  return false;
+});
