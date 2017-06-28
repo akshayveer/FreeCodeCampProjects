@@ -9,6 +9,10 @@ function createSVGPath(cx, cy, r1, r2, width) {
   $("#svg3").attr({"d": ans, "stroke-width":width});
   $("#svg4").attr({"d": ans, "stroke-width":width});
 
+  var dx = 17;
+  $("#stop-button").attr({"cx" : r1 + width - dx, "cy" : 100});
+  $("#start-button").attr({"cx" : r1 + width, "cy" : 100});
+  $("#strict-button").attr({"cx" : r1 + width + dx, "cy" : 100});
 }
 
 $(document).ready(function () {
