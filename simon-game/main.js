@@ -13,6 +13,10 @@ function createSVGPath(cx, cy, r1, r2, width) {
   $("#stop-button").attr({"cx" : r1 + width - dx, "cy" : 100});
   $("#start-button").attr({"cx" : r1 + width, "cy" : 100});
   $("#strict-button").attr({"cx" : r1 + width + dx, "cy" : 100});
+
+  var dy = 20;
+
+  $("#count").attr({"x" : r1 + width, "y" : r1 + width + dy});
 }
 
 $(document).ready(function () {
