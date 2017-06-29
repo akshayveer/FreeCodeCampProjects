@@ -10,3 +10,5 @@ click [here](https://www.freecodecamp.com/challenges/build-a-simon-game) to view
 6. If I want to restart, I can hit a button to do so, and the game will return to a single step.
 7. I can play in strict mode where if I get a button press wrong, it notifies me that I have done so, and the game restarts at a new random series of button presses.
 8. I can win the game by getting a series of 20 steps correct. I am notified of my victory, then the game starts over.
+
+click [here](https://codepen.io/akshayveer/pen/PjQZgj) to view on codepen
