@@ -71,7 +71,7 @@ function getBestAndWorstCase(cp){
     for (var i = 1;i <= 9;i++){
       if (board_config[i] == ''){
         board_config[i] = player_choices[1];
-        if (checkGameOver(i)){
+        if (checkGameOver(i, cp)){
           board_config[i] = '';
           return {'chance' : 0};
         } else if (gameTie()){
@@ -95,7 +95,7 @@ function getBestAndWorstCase(cp){
     for (var i = 1;i <= 9;i++){
       if (board_config[i] == ''){
         board_config[i] = player_choices[2];
-        if (checkGameOver(i)){
+        if (checkGameOver(i, cp)){
           board_config[i] = '';
           return {'id' : i, 'chance' : 1};
         } else if (gameTie()){
@@ -132,7 +132,7 @@ function getBestAndWorstCase1(cp) {
     for (var i = 1;i <= 9;i++){
       if (board_config[i] == ''){
         board_config[i] = player_choices[1];
-        if (checkGameOver(i)){
+        if (checkGameOver(i, cp)){
           board_config[i] = '';
           return [{'id' : i, 'chance' : 0},{'id' : i, 'chance' : 0}];
         } else if (gameTie()){
@@ -166,7 +166,7 @@ function getBestAndWorstCase1(cp) {
     for (var i = 1;i <= 9;i++){
       if (board_config[i] == ''){
         board_config[i] = player_choices[2];
-        if (checkGameOver(i)){
+        if (checkGameOver(i, cp)){
           board_config[i] = '';
           return [{'id': i, 'chance' : 1},{'id': i, 'chance' : 1}];
         } else if (gameTie()){
@@ -219,7 +219,7 @@ function resetBoard() {
   }
 }
 
-function checkGameOver(id) {
+function checkGameOver(id, current_player) {
   id = id - 1;
   var row = Math.floor(id / 3);
   var col = id % 3;
@@ -317,7 +317,7 @@ $('.cell').on('click', function (e) {
   markCell(id, player_choices[current_player]);
   board_config[id] = player_choices[current_player];
   console.log(id);
-  if (checkGameOver(id)){
+  if (checkGameOver(id, current_player)){
     console.log('player wins');
     $('#current-player').text(player_name[current_player] + ' wins ');
     game_started = false;
