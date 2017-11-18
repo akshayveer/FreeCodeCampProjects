@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
+import Row from './Row';
 class Table extends Component {
   state = { sortBy: 'recent-points' };
 
