@@ -1,36 +1,35 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Row from './Row';
-import _ from 'lodash';
+import TableBody from './TableBody';
+import TableHeader from './TableHeader';
 
 class Table extends Component {
-  state = { sortBy: 'recent-points', downloaded: false };
+  state = { sortBy: 'recent', data: [] };
 
   async getData() {
-    const { data } = await axios.get(
-      'https://fcctop100.herokuapp.com/api/fccusers/top/alltime'
-    );
-    this.data = data;
-    if (this.data) {
-      this.setState({ downloaded: true });
+    try {
+      const { data } = await axios.get(
+        'https://fcctop100.herokuapp.com/api/fccusers/top/alltime'
+      );
+
+      if (data) {
+        this.setState({ data });
+      }
+    } catch (e) {
+      console.log(e);
     }
   }
 
   componentDidMount() {
     this.getData();
   }
-  renderContent(downloaded) {
-    return _.map(this.data, (entry, rank) => {
-      return (
-        <Row
-          key={rank}
-          name={entry.username}
-          rank={rank}
-          recentPoints={entry.recent}
-          overalPoints={entry.alltime}
-        />
-      );
-    });
+
+  changeSortKey() {
+    if (this.state.sortBy === 'recent') {
+      this.setState({ sortBy: 'alltime' });
+    } else {
+      this.setState({ sortBy: 'recent' });
+    }
   }
   render() {
     return (
@@ -38,15 +37,11 @@ class Table extends Component {
         className="striped responsive-table"
         style={{ width: '50%', margin: 'auto' }}
       >
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Camper Name</th>
-            <th>Points in past 30 days</th>
-            <th>All time points</th>
-          </tr>
-        </thead>
-        <tbody>{this.renderContent(this.state.downloaded)}</tbody>
+        <TableHeader
+          sortBy={this.state.sortBy}
+          onClick={this.changeSortKey.bind(this)}
+        />
+        <TableBody data={this.state.data} sortBy={this.state.sortBy} />
       </table>
     );
   }
