@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default props => {
+const Row = props => {
   return (
     <tr>
       <td>{props.rank}</td>
@@ -10,3 +10,5 @@ export default props => {
     </tr>
   );
 };
+
+export default Row;
